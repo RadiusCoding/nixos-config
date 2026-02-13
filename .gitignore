@@ -1,0 +1,12 @@
+# Nix build results
+result
+result-*
+
+# Editor backups
+*~
+*.swp
+*.swo
+.*.swp
+
+# OS files
+.DS_Store
