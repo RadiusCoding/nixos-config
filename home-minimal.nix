@@ -8,7 +8,7 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Minimal packages (no GUI)
+  # Packages
   home.packages = with pkgs; [
     fastfetch
     neovim
@@ -18,6 +18,9 @@
     unzip
     zip
     gh
+    kitty
+    feh
+    xclip
   ];
 
   # Neovim config (symlink only config files, not plugin data)
@@ -57,6 +60,34 @@
       rebuild = "sudo nixos-rebuild switch --flake ~/nixos-config#nixos-arm";
       config = "nvim ~/nixos-config";
       tempinstall = "nix-shell -p";
+    };
+  };
+
+  # i3 keybindings for audio
+  xsession.windowManager.i3.config.keybindings = lib.mkOptionDefault {
+    "XF86AudioRaiseVolume" = "exec --no-startup-id pamixer -i 5";
+    "XF86AudioLowerVolume" = "exec --no-startup-id pamixer -d 5";
+    "XF86AudioMute" = "exec --no-startup-id pamixer -t";
+  };
+
+  # Background wallpaper service
+  services.random-background = {
+    enable = true;
+    imageDirectory = "%h/wallpapers";
+  };
+
+  # Picom compositor
+  services.picom = {
+    enable = true;
+    shadow = true;
+    shadowOffsets = [ (-7) (-7) ];
+    shadowOpacity = 0.6;
+    settings = {
+      corner-radius = 12;
+      rounded-corners-exclude = [
+        "window_type = 'dock'"
+        "window_type = 'desktop'"
+      ];
     };
   };
 

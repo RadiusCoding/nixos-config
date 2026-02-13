@@ -27,6 +27,23 @@
     wireplumber.enable = true;
   };
 
+  # Display and desktop
+  services.xserver.enable = true;
+  services.xserver.xkb.layout = "gb";
+  services.displayManager.defaultSession = "none+i3";
+  services.displayManager.sddm.enable = true;
+
+  services.xserver.windowManager.i3 = {
+    enable = true;
+    package = pkgs.i3;
+    extraPackages = with pkgs; [
+      dmenu
+      i3status
+      i3lock
+      kitty
+    ];
+  };
+
   # Services
   services.tailscale.enable = true;
   services.openssh.enable = true;
@@ -47,7 +64,16 @@
     vim
     wget
     git
+    pamixer
+    playerctl
+    pavucontrol
+    brightnessctl
   ];
+
+  # Environment variables
+  environment.sessionVariables = {
+    TERMINAL = "kitty";
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
