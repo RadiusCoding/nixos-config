@@ -31,7 +31,13 @@
   services.xserver.enable = true;
   services.xserver.xkb.layout = "gb";
   services.displayManager.defaultSession = "none+i3";
-  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+    theme = "sddm-astronaut-theme";
+    extraPackages = [
+      (pkgs.sddm-astronaut.override { embeddedTheme = "astronaut"; })
+    ];
+  };
 
   services.xserver.windowManager.i3 = {
     enable = true;
@@ -68,6 +74,7 @@
     playerctl
     pavucontrol
     brightnessctl
+    (sddm-astronaut.override { embeddedTheme = "astronaut"; })
   ];
 
   # Environment variables
