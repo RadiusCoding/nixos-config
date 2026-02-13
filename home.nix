@@ -31,9 +31,10 @@
     gh
   ];
 
-  # Neovim config (symlinked from dotfiles)
-  home.file.".config/nvim" = {
-    source = ./dotfiles/nvim;
+  # Neovim config (symlink only config files, not plugin data)
+  home.file.".config/nvim/init.lua".source = ./dotfiles/nvim/init.lua;
+  home.file.".config/nvim/lua" = {
+    source = ./dotfiles/nvim/lua;
     recursive = true;
   };
 
