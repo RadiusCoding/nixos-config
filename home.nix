@@ -38,6 +38,12 @@
     recursive = true;
   };
 
+  # Wallpapers
+  home.file."wallpapers" = {
+    source = ./dotfiles/wallpapers;
+    recursive = true;
+  };
+
   # Git
   programs.git = {
     enable = true;
