@@ -1,0 +1,59 @@
+{ config, lib, pkgs, ... }:
+
+{
+  imports = [
+    ./hardware-configuration.nix
+  ];
+
+  # Bootloader (adjust based on your device)
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  # Networking
+  networking.hostName = "nixos-arm";
+  networking.networkmanager.enable = true;
+
+  # Time and locale
+  time.timeZone = "Europe/London";
+
+  # Security
+  security.rtkit.enable = true;
+
+  # Audio (PipeWire)
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
+  };
+
+  # Services
+  services.tailscale.enable = true;
+  services.openssh.enable = true;
+
+  # Users
+  users.users.sage = {
+    isNormalUser = true;
+    shell = pkgs.zsh;
+    extraGroups = [ "wheel" "networkmanager" "audio" ];
+    initialPassword = "changeme";
+  };
+
+  # System-wide programs
+  programs.zsh.enable = true;
+
+  # System packages
+  environment.systemPackages = with pkgs; [
+    vim
+    wget
+    git
+  ];
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
+  # Enable flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  system.stateVersion = "25.05";
+}
