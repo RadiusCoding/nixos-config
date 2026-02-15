@@ -21,6 +21,9 @@
     xterm
     feh
     xclip
+    polybar
+    pywal
+    bc
   ];
 
   # Neovim config (symlink only config files, not plugin data)
@@ -72,15 +75,41 @@
   # i3 config
   home.file.".config/i3/config".source = ./dotfiles/i3/config;
 
-  # Background wallpaper service
-  services.random-background = {
-    enable = true;
-    imageDirectory = "%h/wallpapers";
+  # Polybar config
+  home.file.".config/polybar/config.ini".source = ./dotfiles/polybar/config.ini;
+  home.file.".config/polybar/launch.sh" = {
+    source = ./dotfiles/polybar/launch.sh;
+    executable = true;
   };
 
-  # Picom compositor
+  # Wallpaper script
+  home.file.".config/scripts/wallpaper.sh" = {
+    source = ./dotfiles/scripts/wallpaper.sh;
+    executable = true;
+  };
+
+  # Wallpaper rotation timer (every 30 minutes)
+  systemd.user.services.wallpaper-rotate = {
+    Unit.Description = "Rotate wallpaper and update colors";
+    Service = {
+      Type = "oneshot";
+      ExecStart = "%h/.config/scripts/wallpaper.sh";
+      Environment = "PATH=/run/current-system/sw/bin:%h/.nix-profile/bin:/etc/profiles/per-user/sage/bin";
+    };
+  };
+  systemd.user.timers.wallpaper-rotate = {
+    Unit.Description = "Rotate wallpaper every 30 minutes";
+    Timer = {
+      OnCalendar = "*:0/30";
+      Persistent = true;
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
+
+  # Picom compositor (glx backend for blur/transparency)
   services.picom = {
     enable = true;
+    backend = "glx";
     shadow = true;
     shadowOffsets = [ (-7) (-7) ];
     shadowOpacity = 0.6;
@@ -89,6 +118,15 @@
       rounded-corners-exclude = [
         "window_type = 'dock'"
         "window_type = 'desktop'"
+      ];
+      blur = {
+        method = "dual_kawase";
+        strength = 6;
+      };
+      blur-background-exclude = [
+        "window_type = 'dock'"
+        "window_type = 'desktop'"
+        "class_g = 'slop'"
       ];
     };
   };

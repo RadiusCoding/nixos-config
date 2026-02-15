@@ -44,7 +44,6 @@
     package = pkgs.i3;
     extraPackages = with pkgs; [
       dmenu
-      i3status
       i3lock
       xterm
     ];

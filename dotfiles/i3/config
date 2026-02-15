@@ -4,6 +4,22 @@ set $mod Mod4
 
 font pango:monospace 8
 
+# Pywal colors from X resources
+set_from_resource $wal_bg color0 #1a1a2e
+set_from_resource $wal_fg foreground #ffffff
+set_from_resource $wal_accent color4 #e94560
+set_from_resource $wal_urgent color1 #ff0000
+
+# Window borders
+default_border pixel 2
+default_floating_border pixel 2
+
+# class                 border      bg          text     indicator   child_border
+client.focused          $wal_accent $wal_accent $wal_fg  $wal_accent $wal_accent
+client.focused_inactive $wal_bg     $wal_bg     $wal_fg  $wal_bg     $wal_bg
+client.unfocused        $wal_bg     $wal_bg     $wal_fg  $wal_bg     $wal_bg
+client.urgent           $wal_urgent $wal_urgent $wal_fg  $wal_urgent $wal_urgent
+
 # Autostart
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
@@ -129,7 +145,8 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Status bar
-bar {
-        status_command i3status
-}
+# Wallpaper + colors (runs once on login, timer handles rotation)
+exec --no-startup-id ~/.config/scripts/wallpaper.sh
+
+# Polybar (restarts on every i3 restart)
+exec_always --no-startup-id ~/.config/polybar/launch.sh
