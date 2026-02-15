@@ -46,7 +46,7 @@
       dmenu
       i3status
       i3lock
-      kitty
+      xterm
     ];
   };
 
@@ -82,7 +82,7 @@
 
   # Environment variables
   environment.sessionVariables = {
-    TERMINAL = "kitty";
+    TERMINAL = "xterm";
   };
 
   # Allow unfree packages

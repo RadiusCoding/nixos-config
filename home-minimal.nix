@@ -18,7 +18,7 @@
     unzip
     zip
     gh
-    kitty
+    xterm
     feh
     xclip
   ];
