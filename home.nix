@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
 {
   home.username = "sage";
@@ -10,7 +10,6 @@
 
   # Packages
   home.packages = with pkgs; [
-    firefox
     kitty
     feh
     discord
@@ -77,12 +76,8 @@
     };
   };
 
-  # i3 keybindings for audio
-  xsession.windowManager.i3.config.keybindings = lib.mkOptionDefault {
-    "XF86AudioRaiseVolume" = "exec --no-startup-id pamixer -i 5";
-    "XF86AudioLowerVolume" = "exec --no-startup-id pamixer -d 5";
-    "XF86AudioMute" = "exec --no-startup-id pamixer -t";
-  };
+  # i3 config
+  home.file.".config/i3/config".source = ./dotfiles/i3/config;
 
   # Background wallpaper service
   services.random-background = {

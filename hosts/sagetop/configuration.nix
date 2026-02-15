@@ -68,6 +68,19 @@
   # System-wide programs
   programs.zsh.enable = true;
 
+  # Firefox with Tridactyl extension
+  programs.firefox = {
+    enable = true;
+    policies = {
+      ExtensionSettings = {
+        "tridactyl.vim@cmcaine.co.uk" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/tridactyl-vim/latest.xpi";
+          installation_mode = "force_installed";
+        };
+      };
+    };
+  };
+
   # System packages
   environment.systemPackages = with pkgs; [
     vim
