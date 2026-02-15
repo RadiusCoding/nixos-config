@@ -78,7 +78,6 @@
     pamixer
     playerctl
     pavucontrol
-    pulseaudio
     brightnessctl
   ];
 

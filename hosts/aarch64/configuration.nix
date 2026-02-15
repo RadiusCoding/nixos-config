@@ -50,6 +50,9 @@
     ];
   };
 
+  # Compositor
+  services.picom.enable = true;
+
   # Services
   services.tailscale.enable = true;
   services.openssh.enable = true;
