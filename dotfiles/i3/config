@@ -10,9 +10,10 @@ set_from_resource $wal_fg foreground #ffffff
 set_from_resource $wal_accent color4 #e94560
 set_from_resource $wal_urgent color1 #ff0000
 
-# Window borders
+# Window borders and gaps
 default_border pixel 2
 default_floating_border pixel 2
+gaps inner 10
 
 # class                 border      bg          text     indicator   child_border
 client.focused          $wal_accent $wal_accent $wal_fg  $wal_accent $wal_accent
@@ -45,8 +46,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 # Kill focused window
 bindsym $mod+Shift+q kill
 
-# Launcher
-bindsym $mod+d exec --no-startup-id dmenu_run
+# Launcher (pywal themed)
+bindsym $mod+d exec --no-startup-id ~/.config/scripts/dmenu_wal.sh
 
 # Change focus
 bindsym $mod+j focus left
@@ -144,6 +145,15 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+
+# Disable default i3bar (using polybar instead)
+bar {
+    mode invisible
+}
+
+# Wallpaper picker
+for_window [title="wallpaper_picker"] floating enable, resize set 900 600
+bindsym $mod+Shift+w exec --no-startup-id ~/.config/scripts/wallpaper_picker.sh
 
 # Wallpaper + colors (runs once on login, timer handles rotation)
 exec --no-startup-id ~/.config/scripts/wallpaper.sh

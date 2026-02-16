@@ -63,8 +63,8 @@ foreground = ${fg}
 accent = ${color4}
 EOF
 
-# Restart polybar
-"$HOME/.config/polybar/launch.sh" &
+# Restart polybar (signal existing instance, don't spawn new ones)
+polybar-msg cmd restart 2>/dev/null
 
 # Reload i3 to apply border colors from updated X resources
-i3-msg reload &
+i3-msg reload 2>/dev/null

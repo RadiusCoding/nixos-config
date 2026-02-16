@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 
 # Terminate already running bar instances
-killall -q polybar
-
-# Wait until the processes have been shut down
-while pgrep -u $UID -x polybar >/dev/null; do sleep 0.2; done
+polybar-msg cmd quit 2>/dev/null
+killall -q -w polybar 2>/dev/null
+sleep 0.5
 
 # Launch polybar on each monitor
 if type "xrandr" > /dev/null 2>&1; then
     for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-        MONITOR=$m polybar --reload main &
+        MONITOR=$m polybar main &
     done
 else
-    polybar --reload main &
+    polybar main &
 fi

@@ -21,9 +21,10 @@
     xterm
     feh
     xclip
-    polybar
+    (polybar.override { i3Support = true; })
     pywal
     bc
+    nsxiv
   ];
 
   # Neovim config (symlink only config files, not plugin data)
@@ -82,9 +83,17 @@
     executable = true;
   };
 
-  # Wallpaper script
+  # Scripts
   home.file.".config/scripts/wallpaper.sh" = {
     source = ./dotfiles/scripts/wallpaper.sh;
+    executable = true;
+  };
+  home.file.".config/scripts/dmenu_wal.sh" = {
+    source = ./dotfiles/scripts/dmenu_wal.sh;
+    executable = true;
+  };
+  home.file.".config/scripts/wallpaper_picker.sh" = {
+    source = ./dotfiles/scripts/wallpaper_picker.sh;
     executable = true;
   };
 
@@ -110,6 +119,7 @@
   services.picom = {
     enable = true;
     backend = "glx";
+    vSync = true;
     shadow = true;
     shadowOffsets = [ (-7) (-7) ];
     shadowOpacity = 0.6;
