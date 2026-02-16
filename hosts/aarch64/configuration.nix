@@ -30,6 +30,7 @@
   # Display and desktop
   services.xserver.enable = true;
   services.xserver.xkb.layout = "gb";
+  services.xserver.videoDrivers = [ "modesetting" ];
   services.displayManager.defaultSession = "none+i3";
   services.displayManager.sddm = {
     enable = true;
