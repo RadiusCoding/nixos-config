@@ -47,11 +47,11 @@
       dmenu
       i3lock
       xterm
+      dex
+      xss-lock
+      networkmanagerapplet
     ];
   };
-
-  # Compositor
-  services.picom.enable = true;
 
   # Services
   services.tailscale.enable = true;

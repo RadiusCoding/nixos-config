@@ -47,6 +47,9 @@
       dmenu
       i3lock
       kitty
+      dex
+      xss-lock
+      networkmanagerapplet
     ];
   };
 
